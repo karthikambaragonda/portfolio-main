@@ -218,7 +218,7 @@ app.get("/edit/:id", ensureAuthenticated, async (req, res) => {
 app.post("/api/posts", ensureAuthenticated, async (req, res) => {
   try {
     const email = req.user.email;
-    const { id,title, posts } = req.body;
+    const { id, title, posts } = req.body;
     const response = await db.query(
       "INSERT INTO posts (email,title,posts) VALUES ($1, $2, $3) RETURNING *",
       [email, title, posts]
@@ -238,7 +238,7 @@ app.post("/api/posts/:id", ensureAuthenticated, async (req, res) => {
   try {
     // const id = ;
     const email = req.user.email;
-    const { title, posts ,id} = req.body;
+    const { title, posts, id } = req.body;
     const response = await db.query(
       "UPDATE posts SET title=$1, posts=$2, date=CURRENT_TIMESTAMP WHERE email=$3 AND id=$4 RETURNING *",
       [title, posts, email, id]
@@ -261,14 +261,14 @@ app.get("/api/posts/delete/:id", ensureAuthenticated, async (req, res) => {
   try {
     const email = req.user.email;
     const id = req.params.id;
-  
+
     const response = await db.query("DELETE FROM posts WHERE email = $1 AND id = $2;",
       [email, id]
-    );     
+    );
     console.log(response.rows);
-    
-      res.redirect("/blog");
-    
+
+    res.redirect("/blog");
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error updating post" });
