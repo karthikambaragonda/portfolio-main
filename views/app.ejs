@@ -32,36 +32,7 @@
     height:100px; 
     user-select:none;
     padding-bottom: 50px;">
-    <!--<center><h1>Herokart</h1></center>
     
-        
-        <fieldset>
-            <center><h3>Sign Up</h3></center>
-     <form action="/signup" method="POST">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required maxlength="20" autocomplete="off" autofocus><br><br>
-         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required maxlength="30" autocomplete="off"><br><br>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required autocomplete="off" maxlength="20" ><br><br>
-        
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required maxlength="8"><br><br>
-        
-        <label for="security_question">Security Question:</label><br>
-        <select id="security_question" name="security_question" required>
-            <option value="" disabled selected>Select a  question for password reset</option>
-            <option value="What is your Nick Name?">What is your Nick Name?</option>
-            <option value="What city were you born in?">What city were you born in?</option>
-            <option value="What is the name of your first pet?">What is the name of your first pet?</option>
-            <option value="What is your Vehicle Number?">What is your Vehicle Number?</option>
-        </select>
-        <br><br>
-        <label for="security_answer" >Security Answer:</label><br>
-        <input type="password" id="security_answer" name="security_answer" required autocomplete="off" maxlength="20" placeholder="For Password Reset"><br><br>
-        <button type="submit">Sign Up</button>&nbsp;
-        <button type="reset">Clear</button>
-    </form> -->
     <div class="modal-dialog" role="document">
     <div class="modal-content rounded-4 shadow">
       <div class="modal-header p-4 pb-3 border-bottom-0"><h2>Sign Up</h2></div>
@@ -95,25 +66,8 @@
             <input type="password" class="form-control rounded-3"id="security_answer" name="security_answer" required autocomplete="off" maxlength="20" placeholder="For Password Reset">
             <label for="floatingPassword">Security Answer</label>
           </div>
-           <label for="role" class="form-label">&nbsp;Select Role</label>
-           <!-- <div class="form-floating mb-2">
-           <label for="role" class="form-label"></label>
-    <select class="form-select form-select-sm rounded-3" aria-label="Small select example" id="role" name="role" required>
-    <option disabled selected="">Select Role</option>
-      <option value="Teacher">Teacher</option>
-    <option value="Student">Student</option>
-   
-</select>
-
-          </div>  -->
-   <div class="floating-label">
-            <div class="radio-group">
-                <input type="radio" id="Student" name="role" value="Student" required>
-                <label for="Student">Student</label>&nbsp;
-                <input type="radio" id="Teacher" name="role" value="Teacher" required>
-                <label for="Teacher">Teacher</label>
-            </div>
-        </div>
+        
+        
           <div>
             <button class="w-40 mb-2 btn btn-md rounded-1 btn-primary" type="submit">Sign up</button>&nbsp;
             <button class="w-40 mb-2 btn btn-md rounded-1 btn-secondary" type="reset">Clear</button> </div>

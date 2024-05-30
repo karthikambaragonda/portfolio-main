@@ -313,10 +313,10 @@ app.post("/signup", async (req, res) => {
       return res.redirect("/emailexist");
     } else {
       await db.query(
-        "INSERT INTO users (id, name, password, security_question, security_answer, role) VALUES ($1, $2, $3, $4, $5, $6)",
-        [email, name, password, security_question, security_answer, role]
+        "INSERT INTO blog (email, name, password, security_question, security_answer) VALUES ($1, $2, $3, $4, $5)",
+        [email, name, password, security_question, security_answer]
       );
-      req.login({ email, name, role }, (err) => {
+      req.login({ email, name }, (err) => {
         if (err) {
           return res.status(500).send("Login error");
         }
