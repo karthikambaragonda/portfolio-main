@@ -123,26 +123,30 @@ app.get("/admin", (req, res) => {
 app.post("/adminlogin", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const admin = "admin";
-  db.query(
-    "SELECT * FROM users WHERE email = $1 AND password = $2 AND role = $3",
-    [email, password, admin]
-  )
-    .then((result) => {
+  const adminemail = "ambaragondakarthik@gmail.com";
+
+  if (adminemail === email) {
+    db.query(
+      "SELECT * FROM blog WHERE email = $1 AND password = $2 ",
+      [email, password]
+    ).then((result) => {
       if (result.rows.length > 0) {
         res.render("admindashboard.ejs", { users: result.rows });
       } else {
         res.send("You are not admin");
       }
     })
-    .catch((err) => {
-      console.error("Error executing query:", err);
-      res.status(500).json({ error: "Internal server error" });
-    });
+  } else {
+    res.send("You are not admin");
+  };
 });
 
+  
+    
+   
+
 app.get("/adminusers", (req, res) => {
-  db.query("SELECT * FROM users")
+  db.query("SELECT * FROM blog")
     .then((result) => {
       if (result.rows.length > 0) {
         res.render("admin_users.ejs", { users: result.rows });
@@ -343,7 +347,7 @@ app.get("/recover", (req, res) => {
 app.post("/recover", (req, res) => {
   const { email, s_answer } = req.body;
   db.query(
-    "SELECT name, email, password FROM users WHERE email = $1 AND security_answer = $2",
+    "SELECT name, email, password FROM blog WHERE email = $1 AND security_answer = $2",
     [email, s_answer],
     (err, result) => {
       if (err) {
