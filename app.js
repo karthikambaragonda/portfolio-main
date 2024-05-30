@@ -82,16 +82,16 @@ app.get("/qrsecret", (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////
-// const db = new pg.Client({
-//   connectionString: process.env.PG_STR,
-// });
 const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "owner",
-  password: "qwertyuiop",
-  port: 5432,
+  connectionString: "postgres://vcxjuvpj:bvqMaw7id-9N5ZxyAoE8YpsFuH8VUJsA@tiny.db.elephantsql.com/vcxjuvpj",
 });
+// const db = new pg.Client({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "owner",
+//   password: "qwertyuiop",
+//   port: 5432,
+// });
 
 db.connect((err) => {
   if (err) {
