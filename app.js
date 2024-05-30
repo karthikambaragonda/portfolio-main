@@ -21,7 +21,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 14 * 24 * 60 * 60 * 1000, // 14 days
+      maxAge: 64 * 24 * 60 * 60 * 1000, 
     },
   })
 );
