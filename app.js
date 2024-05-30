@@ -83,15 +83,9 @@ app.get("/qrsecret", (req, res) => {
 
 ///////////////////////////////////////////////////////////////
 const db = new pg.Client({
-  connectionString: "postgres://vcxjuvpj:bvqMaw7id-9N5ZxyAoE8YpsFuH8VUJsA@tiny.db.elephantsql.com/vcxjuvpj",
+  connectionString: process.env.PG_STR,
 });
-// const db = new pg.Client({
-//   user: "postgres",
-//   host: "localhost",
-//   database: "owner",
-//   password: "qwertyuiop",
-//   port: 5432,
-// });
+
 
 db.connect((err) => {
   if (err) {
@@ -311,7 +305,7 @@ app.post("/signup", async (req, res) => {
   const { email, name, password, security_question, security_answer, role } = req.body;
 
   try {
-    const checkResult = await db.query("SELECT * FROM posts WHERE email = $1", [email]);
+    const checkResult = await db.query("SELECT * FROM blog WHERE email = $1", [email]);
 
     if (checkResult.rows.length > 0) {
       return res.redirect("/emailexist");
