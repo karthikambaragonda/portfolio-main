@@ -2,6 +2,8 @@ create table blog(
 	email varchar(255)unique not null,
 	name varchar(255),
 	password varchar(255),
+    security_question varchar(255),
+    security_answer varchar(255),
 	PRIMARY KEY (email)
 );
 CREATE TABLE posts (
