@@ -1,0 +1,49 @@
+<%- include("partials/header.ejs") -%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="styles/css.css" />
+   
+  </head>
+  <body>
+    <div class="container"style="display: flex;flex-wrap: wrap;flex: 1;align-items: center;justify-content: center;">
+      <form id="urlForm">
+        <h1>QR Code Generator</h1>
+        <label for="urlInput">Type in your URL: </label><br /><br />
+        <input type="text" id="urlInput" name="url" /><br /><br />
+        <button type="button" onclick="generateQRCode()"> Generate QR Code</button><br /><br /><br />
+      </form>
+    </div>
+    <div id="qr"style="display: flex;flex-wrap: wrap;flex: 1;align-items: center;justify-content: center;">
+    <div id="qrCode"style="border:2px solid #333;">
+      <img src="/images/qr_img.png" />
+    </div></div><br> 
+    <script>
+      /*async function generateQRCode() {const urlInput = document.getElementById("urlInput").value;const qrCodeDiv = document.getElementById("qrCode");const response = await fetch(`/generateQRCode?url=${encodeURIComponent(urlInput)}`);const qrCodeImage = await response.blob();console.log(createObjectURL);qrCodeDiv.innerHTML = `<img src="${URL.createObjectURL(qrCodeImage)}" alt="QR Code">`;}*/
+      async function generateQRCode() {
+          try {
+              const urlInput = document.getElementById("urlInput").value;
+              const qrCodeDiv = document.getElementById("qrCode");
+              const url = "/generateQRCode?url=" + encodeURIComponent(urlInput);
+              const response = await fetch(url);
+              const qrCodeImage = await response.blob();
+              const img = document.createElement("img");
+              img.src = URL.createObjectURL(qrCodeImage);
+              img.alt = "QR Code";
+              qrCodeDiv.innerHTML = "";
+              qrCodeDiv.appendChild(img);
+              } catch (error) {
+              console.error("There was a problem with the fetch operation:", error);
+              }}
+              document.getElementById("urlInput").addEventListener("keypress", function(event) {
+              if (event.key === "Enter") {
+                event.preventDefault(); 
+                generateQRCode();
+              }});
+    </script>
+  </body>
+</html>
+<%- include("partials/footer.ejs") -%>

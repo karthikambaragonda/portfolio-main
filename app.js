@@ -1,0 +1,428 @@
+import express from "express";
+import qr from "qr-image";
+import bodyParser from "body-parser";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import fs from "fs";
+import pg from "pg";
+import passport from "passport";
+import { Strategy } from "passport-local";
+import session from "express-session";
+import GoogleStrategy from "passport-google-oauth2";
+import env from "dotenv";
+env.config()
+
+const app = express();
+const port = 4000;
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 14 * 24 * 60 * 60 * 1000, // 14 days
+    },
+  })
+);
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static("public"));
+
+app.get("/", (req, res) => {
+  res.render("index.ejs");
+});
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.get("/qr", (req, res) => {
+  res.render("qr.ejs");
+});
+
+app.get("/projects", (req, res) => {
+  res.render("projects.ejs");
+});
+app.get("/char", (req, res) => {
+  res.render("char.ejs");
+});
+app.get("/string", (req, res) => {
+  res.render("string.ejs");
+});
+app.get("/tt", function (req, res) {
+  res.redirect('https://karthikambaragonda.github.io/Time-Table/');
+});
+app.get("/dice", (req, res) => {
+  res.render("dice.ejs");
+});
+
+
+app.get("/generateQRCode", (req, res) => {
+  const url = req.query.url;
+  const qr_svg = qr.image(url, { type: 'png' });
+  res.type('png');
+  qr_svg.pipe(res);
+  fs.appendFile("URL.txt", url + '\n', (err) => {
+    if (err) throw err;
+  });
+});
+app.get("/qrsecret", (req, res) => {
+  fs.readFile('URL.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error reading the file');
+    }
+    res.set('Content-Type', 'text/plain');
+    res.send(data);
+  });
+});
+
+///////////////////////////////////////////////////////////////
+// const db = new pg.Client({
+//   connectionString: process.env.PG_STR,
+// });
+const db = new pg.Client({
+  user: "postgres",
+  host: "localhost",
+  database: "owner",
+  password: "qwertyuiop",
+  port: 5432,
+});
+
+db.connect((err) => {
+  if (err) {
+    console.error("Error connecting to the database", err);
+  } else {
+    console.log("Connected to the database");
+  }
+
+  db.on("error", (err) => {
+    console.error("Database connection error:", err);
+    if (err.code === "ECONNRESET" || err.code === "EPIPE") {
+      console.log("Attempting to reconnect to the database...");
+      db.connect()
+        .then(() => {
+          console.log("Reconnected to the database successfully");
+        })
+        .catch((error) => {
+          console.error("Failed to reconnect to the database:", error);
+        });
+    }
+  });
+});
+
+
+app.get("/admin", (req, res) => {
+  res.render("admin.ejs");
+});
+
+app.post("/adminlogin", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const admin = "admin";
+  db.query(
+    "SELECT * FROM users WHERE email = $1 AND password = $2 AND role = $3",
+    [email, password, admin]
+  )
+    .then((result) => {
+      if (result.rows.length > 0) {
+        res.render("admindashboard.ejs", { users: result.rows });
+      } else {
+        res.send("You are not admin");
+      }
+    })
+    .catch((err) => {
+      console.error("Error executing query:", err);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+app.get("/adminusers", (req, res) => {
+  db.query("SELECT * FROM users")
+    .then((result) => {
+      if (result.rows.length > 0) {
+        res.render("admin_users.ejs", { users: result.rows });
+      } else {
+        res.json({ message: "No user found" });
+      }
+    })
+    .catch((err) => {
+      console.error("Error executing query:", err);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+app.get("/login", (req, res) => {
+  res.render("login.ejs");
+});
+
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/blog",
+    failureRedirect: "/login",
+  })
+);
+
+app.get("/blog", async (req, res) => {
+  if (req.isAuthenticated()) {
+    try {
+      const response = await db.query("SELECT *FROM blog JOIN posts ON blog.email = posts.email; ");
+      res.render("blog.ejs", { posts: response.rows, user: req.user });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error fetching posts" });
+    }
+  } else {
+    res.redirect("/login");
+  }
+});
+app.get("/new", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render("modify.ejs", { heading: "New Post", submit: "Create Post", user: req.user, });
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/edit/:id", ensureAuthenticated, async (req, res) => {
+  try {
+    const email = req.user.email;
+    const id = req.params.id;
+    const response = await db.query("SELECT * FROM posts WHERE email = $1 AND id = $2", [email, id]);
+
+    if (response.rows.length === 0) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    console.log(response.rows[0]);
+
+    res.render("modify.ejs", {
+      heading: "Edit Post",
+      submit: "Update Post",
+      post: response.rows[0],
+      user: req.user,
+    });
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    res.status(500).json({ message: "Error fetching post" });
+  }
+});
+
+
+// Create a new post
+app.post("/api/posts", ensureAuthenticated, async (req, res) => {
+  try {
+    const email = req.user.email;
+    const { id,title, posts } = req.body;
+    const response = await db.query(
+      "INSERT INTO posts (email,title,posts) VALUES ($1, $2, $3) RETURNING *",
+      [email, title, posts]
+    );
+    res.redirect("/blog");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error creating post" });
+  }
+});
+
+
+
+// Partially update a post
+app.post("/api/posts/:id", ensureAuthenticated, async (req, res) => {
+  console.log("called");
+  try {
+    // const id = ;
+    const email = req.user.email;
+    const { title, posts ,id} = req.body;
+    const response = await db.query(
+      "UPDATE posts SET title=$1, posts=$2, date=CURRENT_TIMESTAMP WHERE email=$3 AND id=$4 RETURNING *",
+      [title, posts, email, id]
+    );
+    console.log(response.rows);
+    if (response.rows.length > 0) {
+      res.redirect("/blog");
+    } else {
+      res.status(404).json({ message: "Post not found or not authorized" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating post" });
+  }
+});
+
+
+// Delete a post
+app.get("/api/posts/delete/:id", ensureAuthenticated, async (req, res) => {
+  try {
+    const email = req.user.email;
+    const id = req.params.id;
+  
+    const response = await db.query("DELETE FROM posts WHERE email = $1 AND id = $2;",
+      [email, id]
+    );     
+    console.log(response.rows);
+    
+      res.redirect("/blog");
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating post" });
+  }
+});
+
+
+
+app.get("/logout", (req, res) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login");
+  });
+});
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
+app.get(
+  "/auth/google/dashboard",
+  passport.authenticate("google", {
+    successRedirect: "/blog",
+    failureRedirect: "/login",
+  })
+);
+
+app.get("/signup", (req, res) => {
+  res.render("app.ejs");
+})
+app.post("/signup", async (req, res) => {
+  const { email, name, password, security_question, security_answer, role } = req.body;
+
+  try {
+    const checkResult = await db.query("SELECT * FROM posts WHERE email = $1", [email]);
+
+    if (checkResult.rows.length > 0) {
+      return res.redirect("/emailexist");
+    } else {
+      await db.query(
+        "INSERT INTO users (id, name, password, security_question, security_answer, role) VALUES ($1, $2, $3, $4, $5, $6)",
+        [email, name, password, security_question, security_answer, role]
+      );
+      req.login({ email, name, role }, (err) => {
+        if (err) {
+          return res.status(500).send("Login error");
+        }
+        res.redirect("/signupsuccess");
+      });
+    }
+  } catch (error) {
+    console.error("Error during signup:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+app.get("/emailexist", (req, res) => {
+  res.render("emailexist.ejs");
+})
+app.get("/signupsuccess", (req, res) => {
+  res.render("success.ejs")
+})
+
+app.get("/recover", (req, res) => {
+  res.render("recover.ejs");
+});
+
+
+app.post("/recover", (req, res) => {
+  const { email, s_answer } = req.body;
+  db.query(
+    "SELECT name, email, password FROM users WHERE email = $1 AND security_answer = $2",
+    [email, s_answer],
+    (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        res.status(500).json({ error: "Internal server error" });
+      } else {
+        if (result.rows.length > 0) {
+          res.render("users.ejs", { users: result.rows });
+        } else {
+          res.send("No user Found or Wrong Password Entered!");
+        }
+      }
+    }
+  );
+});
+
+passport.use(
+  new Strategy({ usernameField: 'email' }, async function verify(email, password, cb) {
+    try {
+      const result = await db.query("SELECT * FROM blog WHERE email = $1 AND password = $2", [email, password]);
+
+      if (result.rows.length > 0) {
+        const user = result.rows[0];
+        return cb(null, user);
+      } else {
+        return cb(null, false, { message: "Incorrect email or password." });
+      }
+    } catch (err) {
+      console.error("Error during authentication:", err);
+      return cb(err);
+    }
+  })
+);
+
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "https://sampleserver-fkld.onrender.com/auth/google/dashboard",
+      userProfileURL: process.env.GOOGLE_userProfileURL,
+    },
+    async (accessToken, refreshToken, profile, cb) => {
+      try {
+        const result = await db.query("SELECT * FROM posts WHERE email = $1", [
+          profile.email,
+        ]);
+        const name = profile.displayName;
+        if (result.rows.length === 0) {
+          const newUser = await db.query(
+            "INSERT INTO users (name,email, password,security_question,security_answer) VALUES ($1, $2,$3,$4,$5)",
+            [name, profile.email, "google", "google", "google"]
+          );
+          return cb(null, newUser.rows[0]);
+        } else {
+          return cb(null, result.rows[0]);
+        }
+      } catch (err) {
+        return cb(err);
+      }
+    }
+  )
+);
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+
+passport.deserializeUser((user, cb) => {
+  cb(null, user);
+});
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login'); // Redirect to login page if user is not authenticated
+}
+app.listen(port, () => {
+  console.log(`Server running on port http://localhost:${port}`);
+
+});

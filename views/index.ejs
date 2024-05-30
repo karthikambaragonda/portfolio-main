@@ -1,0 +1,158 @@
+<%- include("partials/header.ejs") -%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+     var video = document.getElementById("video");
+     video.playbackRate = 5;
+    </script>
+  </head>
+  <body>
+    <section id="background">
+      <video id="video" autoplay muted preload="auto">
+        <source src="/images/bg (1).mp4" type="video/mp4" />
+      </video>
+    </section>
+    <section id="body">
+      <div class="container col-xxl-8 px-4">
+        <div class="row flex-lg-row align-items-center g-5 py-4">
+          <div class="col-10 col-sm-8 col-lg-6">
+            <img
+              src="/images/p.jpg"
+              draggable="false"
+              class="d-block mx-lg-auto img-fluid rounded-circle"
+              alt="karthik"
+              width="200"
+              height="100"
+              loading="eager"
+            />
+          </div>
+          <div class="col-lg-3">
+            <h1 class="display-5 fw-bold text-body-emphasis lh-3 mb-4">
+              <span style="font-family: Poppins, Sans-serif">KARTHIK</span>
+            </h1>
+            <h3>About Me</h3>
+            <i>
+              I am <b>Computer Science</b> <br />
+              student at the SR University.<br />
+              I am Interested in <b>Web Development.</b> I aspire to <br />
+              become a <b>full-stack web <br />developer</b>
+            </i>
+            <br /><br />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill=""
+              class="bi bi-geo-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"
+              />
+            </svg>
+            Warangal, Telangana, India.
+          </div>
+        </div>
+      </div>
+      <div class="container px-4 py-6" id="icon-grid">
+        <h1 class="#">Skills</h1>
+        <div
+          class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4 py-4"
+        >
+          <div class="col d-flex align-items-start">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.45em"
+              height="1.45em"
+              fill="#0E76A8"
+              class="bi text-body-secondary flex-shrink-0 me-3"
+              viewBox="0 0 16 16 "
+            >
+              <path
+                d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"
+              />
+            </svg>
+            <div>
+              <h3 class="fw- mb-0 fs-6 text-body-emphasis">HTML5</h3>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.45em"
+              height="1.45em"
+              fill="#0E76A8"
+              class="bi text-body-secondary flex-shrink-0 me-3"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"
+              />
+            </svg>
+            <div>
+              <h3 class="fw- mb-0 fs-6 text-body-emphasis">CSS</h3>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.45em"
+              height="1.45em"
+              fill="#0E76A8"
+              class="bi text-body-secondary flex-shrink-0 me-3"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"
+              />
+            </svg>
+            <div>
+              <h3 class="fw- mb-0 fs-6 text-body-emphasis">Python</h3>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.45em"
+              height="1.45em"
+              fill="#0E76A8"
+              class="bi text-body-secondary flex-shrink-0 me-3"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"
+              />
+            </svg>
+            <div>
+              <h3 class="fw- mb-0 fs-6 text-body-emphasis">NodeJS</h3>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.45em"
+              height="1.45em"
+              fill="#0E76A8"
+              class="bi text-body-secondary flex-shrink-0 me-3"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"
+              />
+            </svg>
+            <div>
+              <h3 class="fw- mb-0 fs-6 text-body-emphasis">
+                Web Development
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
+<%- include("partials/footer.ejs") -%>
