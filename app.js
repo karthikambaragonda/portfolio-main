@@ -291,7 +291,7 @@ app.get(
 );
 
 app.get(
-  "/auth/google/dashboard",
+  "/auth/google/blog",
   passport.authenticate("google", {
     successRedirect: "/blog",
     failureRedirect: "/blog-login",
