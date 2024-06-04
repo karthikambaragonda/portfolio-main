@@ -1,0 +1,24 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+table {
+    margin-top: 100px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    border-collapse: collapse;
+    width: 600px;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #aaa;
+}

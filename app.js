@@ -138,7 +138,6 @@ app.post("/adminlogin", (req, res) => {
 
 
 
-
 app.get("/adminusers", (req, res) => {
   db.query("SELECT * FROM blog")
     .then((result) => {
