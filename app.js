@@ -387,13 +387,13 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
-        const result = await db.query("SELECT * FROM posts WHERE email = $1", [
+        const result = await db.query("SELECT * FROM blog WHERE email = $1", [
           profile.email,
         ]);
         const name = profile.displayName;
         if (result.rows.length === 0) {
           const newUser = await db.query(
-            "INSERT INTO users (name,email, password,security_question,security_answer) VALUES ($1, $2,$3,$4,$5)",
+            "INSERT INTO blog (name,email, password,security_question,security_answer) VALUES ($1, $2,$3,$4,$5)",
             [name, profile.email, "google", "google", "google"]
           );
           return cb(null, newUser.rows[0]);
