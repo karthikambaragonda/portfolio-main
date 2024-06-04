@@ -291,7 +291,7 @@ app.get(
 );
 
 app.get(
-  "/g/blog",
+  "/auth/google/blog",
   passport.authenticate("google", {
     successRedirect: "/blog",
     failureRedirect: "/blog-login",
@@ -382,7 +382,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://karthik-portfolio-main.onrender.com/blog",
+      callbackURL: "https://karthik-portfolio-main.onrender.com/auth/google/blog",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
     async (accessToken, refreshToken, profile, cb) => {
