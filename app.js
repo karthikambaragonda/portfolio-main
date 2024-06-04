@@ -298,6 +298,7 @@ app.get(
   })
 );
 
+
 app.get("/signup", (req, res) => {
   res.render("app.ejs");
 })
