@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import qr from "qr-image";
 import bodyParser from "body-parser";
 import { fileURLToPath } from 'url';
@@ -114,37 +114,19 @@ app.get("/admin", (req, res) => {
   res.render("admin.ejs");
 });
 
-app.post("/adminlogin", (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  const adminemail = "ambaragondakarthik@gmail.com";
+app.post('/adminlogin', passport.authenticate('admin', {
+  successRedirect: '/adminusers',
+  failureRedirect: '/admin',
+  failureFlash: true
+}));
 
-  if (adminemail === email) {
-    db.query(
-      "SELECT * FROM blog WHERE email = $1 AND password = $2 ",
-      [email, password]
-    ).then((result) => {
-      if (result.rows.length > 0) {
-        res.render("admindashboard.ejs", { users: result.rows });
-      } else {
-        res.send("You are not admin");
-      }
-    })
-  } else {
-    res.send("You are not admin");
-  };
-});
-
-
-
-
-app.get("/adminusers", (req, res) => {
+app.get('/adminusers', isAuthenticatedlocal, (req, res) => {
   db.query("SELECT * FROM blog")
     .then((result) => {
       if (result.rows.length > 0) {
         res.render("admin_users.ejs", { users: result.rows });
       } else {
-        res.json({ message: "No user found" });
+        res.json({ message: "No users found" });
       }
     })
     .catch((err) => {
@@ -152,6 +134,31 @@ app.get("/adminusers", (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     });
 });
+
+function isAuthenticatedlocal(req, res, next) {
+  if (req.isAuthenticated() && req.user.email === 'ambaragondakarthik@gmail.com') {
+    return next();
+  }
+  res.redirect('/admin');
+}
+
+
+
+
+// app.get("/adminusers", (req, res) => {
+//   db.query("SELECT * FROM blog")
+//     .then((result) => {
+//       if (result.rows.length > 0) {
+//         res.render("admin_users.ejs", { users: result.rows });
+//       } else {
+//         res.json({ message: "No user found" });
+//       }
+//     })
+//     .catch((err) => {
+//       console.error("Error executing query:", err);
+//       res.status(500).json({ error: "Internal server error" });
+//     });
+// });
 
 app.get("/blog-login", (req, res) => {
   res.render("login.ejs");
@@ -406,6 +413,28 @@ passport.use(
     }
   )
 );
+passport.use(
+  "admin",
+  new Strategy({ usernameField: 'email' }, async function (email, password, cb) {
+    try {
+      const adminemail = "ambaragondakarthik@gmail.com";
+      if (adminemail.toLowerCase() === email.toLowerCase()) {
+        const adminResult = await db.query("SELECT * FROM blog WHERE email = $1 AND password = $2 ", [email, password]);
+        if (adminResult.rows.length > 0) {
+          cb(null, adminResult.rows[0]);
+        } else {
+          cb(null, false);
+        }
+      } else {
+        cb(null, false);
+      }
+    } catch (err) {
+      console.log(err);
+      cb(err);
+    }
+  })
+);
+
 passport.serializeUser((user, cb) => {
   cb(null, user);
 });

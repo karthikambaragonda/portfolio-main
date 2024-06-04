@@ -4,29 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Information</title>
-   <link rel="stylesheet" href="styles/user_table.css">
+    <link rel="stylesheet" href="styles/user_table.css">
 </head>
 <body>
     <div class="container">
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Passsword</th>
-            <th>security_question</th>
-            <th>security_answer</th>
-        </tr>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Security Question</th>
+                <th>Security Answer</th>
+            </tr>
 
-        <% users.forEach(user => { %>
-        <tr>
-            <td><%= user.name %></td>
-            <td><%= user.email %></td>
-            <td><%= user.password %></td>
-            <td><%= user.security_question %></td>
-            <td><%= user.security_answer %></td>
-        </tr>
-        <% }); %>
-    </table>
+            <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.password %></td>
+                <td><%= user.security_question %></td>
+                <td><%= user.security_answer %></td>
+            </tr>
+            <% }); %>
+        </table>
     </div>
 </body>
 </html>
