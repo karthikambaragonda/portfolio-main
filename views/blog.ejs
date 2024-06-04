@@ -22,7 +22,7 @@
           
           <% if (post.name === user.name) { %>
             <a class="edit" href="/edit/<%= post.id %>">Edit</a>
-            <a class="delete" href="/api/posts/delete/<%= post.id %>">Delete</a>
+            <a class="delete" href="/posts/delete/<%= post.id %>">Delete</a>
           <% } %>
         </li>
       <% }); %>

@@ -213,7 +213,7 @@ app.get("/edit/:id", ensureAuthenticated, async (req, res) => {
 
 
 // Create a new post
-app.post("/api/posts", ensureAuthenticated, async (req, res) => {
+app.post("/posts", ensureAuthenticated, async (req, res) => {
   try {
     const email = req.user.email;
     const { id, title, posts } = req.body;
@@ -231,7 +231,7 @@ app.post("/api/posts", ensureAuthenticated, async (req, res) => {
 
 
 // Partially update a post
-app.post("/api/posts/:id", ensureAuthenticated, async (req, res) => {
+app.post("/posts/:id", ensureAuthenticated, async (req, res) => {
   console.log("called");
   try {
     // const id = ;
@@ -255,7 +255,7 @@ app.post("/api/posts/:id", ensureAuthenticated, async (req, res) => {
 
 
 // Delete a post
-app.get("/api/posts/delete/:id", ensureAuthenticated, async (req, res) => {
+app.get("/posts/delete/:id", ensureAuthenticated, async (req, res) => {
   try {
     const email = req.user.email;
     const id = req.params.id;
