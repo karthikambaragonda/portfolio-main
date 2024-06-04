@@ -376,36 +376,36 @@ passport.use(
   })
 );
 
-// passport.use(
-//   "google",
-//   new GoogleStrategy(
-//     {
-//       clientID: process.env.GOOGLE_CLIENT_ID,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//       callbackURL: "https://sampleserver-fkld.onrender.com/auth/google/dashboard",
-//       userProfileURL: process.env.GOOGLE_userProfileURL,
-//     },
-//     async (accessToken, refreshToken, profile, cb) => {
-//       try {
-//         const result = await db.query("SELECT * FROM posts WHERE email = $1", [
-//           profile.email,
-//         ]);
-//         const name = profile.displayName;
-//         if (result.rows.length === 0) {
-//           const newUser = await db.query(
-//             "INSERT INTO users (name,email, password,security_question,security_answer) VALUES ($1, $2,$3,$4,$5)",
-//             [name, profile.email, "google", "google", "google"]
-//           );
-//           return cb(null, newUser.rows[0]);
-//         } else {
-//           return cb(null, result.rows[0]);
-//         }
-//       } catch (err) {
-//         return cb(err);
-//       }
-//     }
-//   )
-// );
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "https://karthik-portfolio-main.onrender.com/blog",
+      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+    },
+    async (accessToken, refreshToken, profile, cb) => {
+      try {
+        const result = await db.query("SELECT * FROM posts WHERE email = $1", [
+          profile.email,
+        ]);
+        const name = profile.displayName;
+        if (result.rows.length === 0) {
+          const newUser = await db.query(
+            "INSERT INTO users (name,email, password,security_question,security_answer) VALUES ($1, $2,$3,$4,$5)",
+            [name, profile.email, "google", "google", "google"]
+          );
+          return cb(null, newUser.rows[0]);
+        } else {
+          return cb(null, result.rows[0]);
+        }
+      } catch (err) {
+        return cb(err);
+      }
+    }
+  )
+);
 passport.serializeUser((user, cb) => {
   cb(null, user);
 });
