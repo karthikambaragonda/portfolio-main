@@ -21,7 +21,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 64 * 24 * 60 * 60 * 1000, 
+      maxAge: 64 * 24 * 60 * 60 * 1000,
     },
   })
 );
@@ -135,9 +135,9 @@ app.post("/adminlogin", (req, res) => {
   };
 });
 
-  
-    
-   
+
+
+
 
 app.get("/adminusers", (req, res) => {
   db.query("SELECT * FROM blog")
@@ -393,7 +393,7 @@ passport.use(
         const name = profile.displayName;
         if (result.rows.length === 0) {
           const newUser = await db.query(
-            "INSERT INTO blog (name,email, password,security_question,security_answer) VALUES ($1, $2,$3,$4,$5)",
+            "INSERT INTO blog (name,email,password,security_question,security_answer) VALUES ($1,$2,$3,$4,$5)",
             [name, profile.email, "google", "google", "google"]
           );
           return cb(null, newUser.rows[0]);

@@ -12,15 +12,18 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Role</th>
+            <th>Passsword</th>
+            <th>security_question</th>
+            <th>security_answer</th>
         </tr>
 
         <% users.forEach(user => { %>
         <tr>
             <td><%= user.name %></td>
             <td><%= user.email %></td>
-            <td><%= user.role %></td>
             <td><%= user.password %></td>
+            <td><%= user.security_question %></td>
+            <td><%= user.security_answer %></td>
         </tr>
         <% }); %>
     </table>
