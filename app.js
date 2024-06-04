@@ -154,7 +154,7 @@ app.get("/adminusers", (req, res) => {
     });
 });
 
-app.get("/login", (req, res) => {
+app.get("/blog-login", (req, res) => {
   res.render("login.ejs");
 });
 
@@ -162,7 +162,7 @@ app.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/blog",
-    failureRedirect: "/login",
+    failureRedirect: "/blog-login",
   })
 );
 
@@ -176,14 +176,14 @@ app.get("/blog", async (req, res) => {
       res.status(500).json({ message: "Error fetching posts" });
     }
   } else {
-    res.redirect("/login");
+    res.redirect("/blog-login");
   }
 });
 app.get("/new", (req, res) => {
   if (req.isAuthenticated()) {
     res.render("modify.ejs", { heading: "New Post", submit: "Create Post", user: req.user, });
   } else {
-    res.redirect("/login");
+    res.redirect("/blog-login");
   }
 });
 
@@ -280,7 +280,7 @@ app.get("/logout", (req, res) => {
     if (err) {
       return next(err);
     }
-    res.redirect("/login");
+    res.redirect("/blog-login");
   });
 });
 app.get(
@@ -294,7 +294,7 @@ app.get(
   "/auth/google/dashboard",
   passport.authenticate("google", {
     successRedirect: "/blog",
-    failureRedirect: "/login",
+    failureRedirect: "/blog-login",
   })
 );
 
@@ -418,7 +418,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/login'); // Redirect to login page if user is not authenticated
+  res.redirect('/blog-login'); // Redirect to login page if user is not authenticated
 }
 app.listen(port, () => {
   console.log(`Server running on port http://localhost:${port}`);
