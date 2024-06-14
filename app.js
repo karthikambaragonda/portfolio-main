@@ -66,6 +66,7 @@ app.get("/generateQRCode", (req, res) => {
   const qr_svg = qr.image(url, { type: 'png' });
   res.type('png');
   qr_svg.pipe(res);
+  
   fs.appendFile("URL.txt", url + '\n', (err) => {
     if (err) throw err;
   });
