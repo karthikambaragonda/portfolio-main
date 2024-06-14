@@ -390,7 +390,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://karthik-portfolio-main.onrender.com/auth/google/blog",
+      callbackURL: "https://karthik-portfolio.onrender.com/auth/google/blog",
       userProfileURL: "https://accounts.google.com/o/oauth2/auth",
     },
     async (accessToken, refreshToken, profile, cb) => {
