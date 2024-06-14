@@ -1,30 +1,29 @@
-
+<%-include("partials/Blog.ejs") %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Blog</title>
     <link rel="stylesheet" href="styles/main.css">
      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
   <div class="container1">
-    <h1>Welcome<h2><%= user.name %></h2></h1>
-    <a class="log" href="/logout">Logout</a>
-    <h1>My Blog</h1><br>
-    <a id="newPostBtn" href="/new">New Post</a>
+    <h3>Welcome&nbsp;<i><smalla><%= user.name %></smalla></i></h3><br>
+    <a class="btn btn-success rounded-pill px-4 " type="button" href="/new">New Post</a>
     <ul id="postsList">
       <% posts.forEach(post => { %>
         <li class="postsList">
-          <h2><%= post.title %></h2>
+          <h4><%= post.title %></h4>
           <small><%= post.date %></small>
           <p><%= post.posts %></p>
-          <small>By: <%= post.name %></small>
+          <small>By: <i><%= post.name %></i></small>
           
           <% if (post.name === user.name) { %>
-            <a class="edit" href="/edit/<%= post.id %>">Edit</a>
-            <a class="delete" href="/posts/delete/<%= post.id %>">Delete</a>
+            <a class="btn btn-warning rounded-pill px-3" type="button" href="/edit/<%= post.id %>">Edit</a>&nbsp;
+            <a class="btn btn-danger rounded-pill px-3" type="button" href="/posts/delete/<%= post.id %>">Delete</a>
+            
           <% } %>
         </li>
       <% }); %>

@@ -1,5 +1,5 @@
 
-body,
+/* body,
 h1,
 h2,
 p,
@@ -15,7 +15,7 @@ textarea,
   margin: 0;
   padding: 0;
   border: none;
-}
+} */
 
 body {
   background-color: #f7f9fc;
@@ -55,6 +55,21 @@ small {
   display: block;
   margin-bottom: 20px;
   color: #888;
+}
+smalla {
+color: #888;
+font-size: 25px;
+font-weight: 500;
+}
+@media (max-width: 991px) {
+  smalla {
+    padding-top: 5px;
+  font-size: 18px;
+    font-weight: 200;
+    display: block;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
  #footer {
