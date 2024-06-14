@@ -21,6 +21,7 @@ body {
   background-color: #f7f9fc;
   color: #333;
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 .container1 {
@@ -56,6 +57,9 @@ small {
   color: #888;
 }
 
+ #footer {
+   margin-top: auto;
+ }
 input,
 textarea {
   width: 100%;
@@ -72,7 +76,7 @@ textarea:focus {
   border-color: #007bff;
 }
 
-/* #newPostBtn,#log,#edit,#delete,
+#newPostBtn,#log,#edit,#delete,
 .full-width {
   text-decoration: none;
   background-color: #007bff;
@@ -83,7 +87,7 @@ textarea:focus {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
-} */
+}
 
 .full-width {
   display: block;
@@ -91,12 +95,12 @@ textarea:focus {
   width: 100%;
 }
 
-/* #newPostBtn,
+#newPostBtn,
 #log,
 #edit,
 #delete:hover {
   background-color: #0056b3;
-} */
+}
 
 #postsList {
   list-style-type: none;
