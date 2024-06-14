@@ -1,18 +1,20 @@
-/* Reset some default browser styles */
+
 body,
 h1,
 h2,
 p,
-ul,
-li,
+#postsList,
+.postsList,
 form,
 input,
 textarea,
-a {
+#newPostBtn,
+#log,
+#edit,
+#delete {
   margin: 0;
   padding: 0;
   border: none;
-  font-family: "Arial", sans-serif;
 }
 
 body {
@@ -21,7 +23,7 @@ body {
   line-height: 1.6;
 }
 
-.container {
+.container1 {
   max-width: 800px;
   margin: 50px auto;
   background-color: #fff;
@@ -70,8 +72,8 @@ textarea:focus {
   border-color: #007bff;
 }
 
-a,
-button {
+/* #newPostBtn,#log,#edit,#delete,
+.full-width {
   text-decoration: none;
   background-color: #007bff;
   color: #fff;
@@ -81,42 +83,44 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
-}
+} */
 
-button.full-width {
+.full-width {
   display: block;
   text-align: center;
   width: 100%;
 }
 
-a,
-button:hover {
+/* #newPostBtn,
+#log,
+#edit,
+#delete:hover {
   background-color: #0056b3;
-}
+} */
 
-ul {
+#postsList {
   list-style-type: none;
 }
 
-li {
+.postsList {
   padding: 20px 0;
   border-bottom: 1px solid #eee;
 }
 
-li:last-child {
+.postsList:last-child {
   border-bottom: none;
 }
 
-a.edit {
+#edit {
   background-color: #007bff;
   /* margin-right: 10px; */
 }
 
-a.delete {
+#delete {
   background-color: #e74c3c;
 }
 
-a.delete:hover {
+#delete:hover {
   background-color: #c0392b;
 }
 
