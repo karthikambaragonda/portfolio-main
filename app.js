@@ -280,7 +280,12 @@ app.get("/posts/delete/:id", ensureAuthenticated, async (req, res) => {
   }
 });
 
-
+app.get("/deleteuser/:email", (req, res) => {
+  const email = req.params.email;
+  console.log(email);
+  db.query("delete from blog where email=$1;", [email]);
+  res.redirect("/adminusers");
+});
 
 app.get("/logout", (req, res) => {
   req.logout(function (err) {

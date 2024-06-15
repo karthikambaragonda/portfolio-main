@@ -1,9 +1,11 @@
 <%- include("partials/header.ejs") -%>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"crossorigin="anonymous"></script>
-    
-<body style="font-family: poppins;">
+     -->
+<link rel="stylesheet" href="styles/google.css">
+<body>
+ 
     <div class="container" style="max-width: 600px;
     padding-top: 20px;
     min-width: 200px;
@@ -26,20 +28,23 @@
             <label for="floatingInput">Password</label>
           </div>
            <div>
-            <button class="w-40 mb-2 btn btn-md rounded-1 btn-primary" type="submit">Login</button>&nbsp;
-            <button class="w-40 mb-2 btn btn-md rounded-1 btn-secondary" type="reset">Clear</button>
-            
-           <div class="col-sm-4">
-       
-            <a class="w-40 mb-2 btn btn-md rounded-1 btn-primary" href="/auth/google" role="button">
-            
-              Sign In with Google
-            </a>&nbsp;&nbsp;
+            <div class="d-grid">
+                <button class="btn btn-primary btn-login text-uppercase" type="submit">Login</button>
+              <hr class="my-3">
+              <center>
+              <a href="/auth/google"> <button type="button" class="google-sign-in-button">Sign in with Google</button></a></div>
+              </center><br>
+              <div class="text-center">
+          <p>Not Registerd?<a href="/signup" style="text-decoration: none;">&nbsp;Register</a>&nbsp;</p>
+          <p>Admin?<a href="/admin" style="text-decoration: none;">&nbsp;login</a>&nbsp;</p>
+        </div>
+          
+          
+        
           </form>
           </div>
         </div>
       </div>
-      <a class="w-40 mb-2 btn btn-md rounded-1 btn-primary" href="/signup">New User? Signup</a>
    </div>  
    </div>
    </div>  

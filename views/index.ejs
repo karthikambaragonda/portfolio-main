@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <script>
-     var video = document.getElementById("video");
-     video.playbackRate = 5;
+            document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById("video");
+            if (video) {
+                video.playbackRate = 3;
+            }
+        });
     </script>
   </head>
   <body>
