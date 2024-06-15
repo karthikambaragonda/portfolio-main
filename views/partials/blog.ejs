@@ -38,22 +38,44 @@
       margin-bottom: 1px;
       margin-right: 4px;
       box-shadow: inset 0 -1px 1px rgba(var(--bs-body-color-rgb), 0.15),0 0.25rem 1.5rem rgba(var(--bs-body-bg-rgb), 0.75);
+      
     }
+     .logout{
+      text-decoration: none;
+      color:red;
+      margin-top: 6px;
+      margin-right: 4px;
+        }
+        .logout:hover {
+            cursor: pointer;
+            opacity: 0.6;
+                transform: scale(1.05);
+        }
+     @media (max-width: 600px) {
+      .logout{
+         margin-top: 6px;
+      margin-right: 1px;
+      }
+     }
+    
+    
    
   </style>
   <body>
     <section id="header">
       <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/blog" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <span class="fs-2 px-4">Blog Application</span>
+          <span class="fs-2 px-4">Blog</span><span class="fs-6 px-1 mx-2">Share Your Insights</span>
         </a>
         <ul class="nav nav-pills">
          <li class="nav-item">
-            
          </li>&nbsp;&nbsp;
           <li class="nav-item">
+            
             </li>
-          </ul><button class="btn btn-danger pill px-3" type="button" onclick="window.location.href='/logout';">Logout</button>
+            
+           
+          </ul> <a class="logout"href="/logout">Logout</a>
 &nbsp;&nbsp;
           
       </header>

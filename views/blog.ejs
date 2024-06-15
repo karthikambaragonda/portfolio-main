@@ -7,23 +7,29 @@
     <title>Blog</title>
     <link rel="stylesheet" href="styles/main.css">
      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
+     <style>
+     #name{
+      color:grey;
+     }
+     .center{
+      margin-left:5px;
+     }
+     </style>
 </head>
 <body>
+  <center class="center"><h5>Hello,&nbsp;<span id="name"><%= user.name %></span>&nbsp;</h5></center>
   <div class="container1">
-    <h3>Welcome&nbsp;<i><smalla><%= user.name %></smalla></i></h3><br>
-    <a class="btn btn-success rounded-pill px-4 " type="button" href="/new">New Post</a>
+    <a class="btn btn-success rounded-pill px-4 mx-4 " type="button" href="/new">Create Post</a>
     <ul id="postsList">
       <% posts.forEach(post => { %>
         <li class="postsList">
           <h4><%= post.title %></h4>
-          <small><%= post.date %></small>
           <p><%= post.posts %></p>
           <small>By: <i><%= post.name %></i></small>
-          
+          <small><%= post.date %></small>
           <% if (post.name === user.name) { %>
             <a class="btn btn-warning rounded-pill px-3" type="button" href="/edit/<%= post.id %>">Edit</a>&nbsp;
             <a class="btn btn-danger rounded-pill px-3" type="button" href="/posts/delete/<%= post.id %>">Delete</a>
-            
           <% } %>
         </li>
       <% }); %>
