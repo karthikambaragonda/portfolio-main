@@ -18,7 +18,7 @@
       <div class="modal-header p-4 pb-3 border-bottom-0"><h2>Log in</h2></div>
       <div class="modal-body p-4 pt-0">
         <% if (message && message.length > 0) { %>
-    <p><%= message %></p>
+    <p style="color:red;font-size: 15px;"><%= message %></p>
   <% } %>
         <form action="/login" method="POST">
           

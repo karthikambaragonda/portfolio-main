@@ -172,7 +172,8 @@ app.post(
   passport.authenticate("local", {
     successRedirect: "/blog",
     failureRedirect: "/blog-login",
-    failureFlash: true 
+    failureFlash: true,
+    failureFlash:" Invalid Credentials. Please try again or Sign in with google."
   })
 );
 
