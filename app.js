@@ -68,7 +68,7 @@ app.get("/generateQRCode", (req, res) => {
   const qr_svg = qr.image(url, { type: 'png' });
   res.type('png');
   qr_svg.pipe(res);
-  
+
   fs.appendFile("URL.txt", url + '\n', (err) => {
     if (err) throw err;
   });
@@ -164,7 +164,7 @@ function isAuthenticatedlocal(req, res, next) {
 // });
 
 app.get("/blog-login", (req, res) => {
-  res.render("login.ejs",{ message: req.flash('error') });
+  res.render("login.ejs", { message: req.flash('error') });
 });
 
 app.post(
@@ -173,7 +173,7 @@ app.post(
     successRedirect: "/blog",
     failureRedirect: "/blog-login",
     failureFlash: true,
-    failureFlash:" Invalid Credentials. Please try again or Sign in with google."
+    failureFlash: " Invalid Credentials. Please try again or Sign in with google."
   })
 );
 
@@ -457,7 +457,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/blog-login'); // Redirect to login page if user is not authenticated
+  res.redirect('/blog-login');
 }
 app.listen(port, () => {
   console.log(`Server running on port http://localhost:${port}`);
