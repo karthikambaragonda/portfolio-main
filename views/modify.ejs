@@ -11,10 +11,9 @@
 
 <body>
   <div class="container1">
-    <h1>
+    <h5>
       <%= heading %>
-     <%= user.name %>
-    </h1>
+    </h5>
 
     <% if (locals.post) { %>
       <form id="editForm" method="post" action="/posts/<%=post.id%>">
