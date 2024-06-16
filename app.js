@@ -10,6 +10,7 @@ import { Strategy } from "passport-local";
 import session from "express-session";
 import GoogleStrategy from "passport-google-oauth2";
 import env from "dotenv";
+import flash from "connect-flash";
 env.config()
 
 const app = express();
@@ -32,6 +33,7 @@ app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static("public"));
+app.use(flash());
 
 app.get("/", (req, res) => {
   res.render("index.ejs");
@@ -162,7 +164,7 @@ function isAuthenticatedlocal(req, res, next) {
 // });
 
 app.get("/blog-login", (req, res) => {
-  res.render("login.ejs");
+  res.render("login.ejs",{ message: req.flash('error') });
 });
 
 app.post(
@@ -170,6 +172,7 @@ app.post(
   passport.authenticate("local", {
     successRedirect: "/blog",
     failureRedirect: "/blog-login",
+    failureFlash: true 
   })
 );
 
@@ -203,7 +206,6 @@ app.get("/edit/:id", ensureAuthenticated, async (req, res) => {
     if (response.rows.length === 0) {
       return res.status(404).json({ message: "Post not found" });
     }
-
     console.log(response.rows[0]);
 
     res.render("modify.ejs", {
@@ -228,6 +230,7 @@ app.post("/posts", ensureAuthenticated, async (req, res) => {
       "INSERT INTO posts (email,title,posts) VALUES ($1, $2, $3) RETURNING *",
       [email, title, posts]
     );
+    console.log(response.rows);
     res.redirect("/blog");
   } catch (error) {
     console.error(error);
