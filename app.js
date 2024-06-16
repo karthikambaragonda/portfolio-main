@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 import qr from "qr-image";
 import bodyParser from "body-parser";
 import { fileURLToPath } from 'url';
