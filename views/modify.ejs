@@ -27,9 +27,9 @@
       </form>
       <% } else {%>
         <form id="newPostForm" method="post" action="/posts">
-          <input type="text" name="title" placeholder="Title" spellcheck="true" required>
-          <textarea name="posts" placeholder="Content" required rows="10" spellcheck="true"></textarea>
-          <input type="text" name="author" placeholder="Author" required value="<%=user.name  %>"readonly >
+          <input type="text" name="title" placeholder="Title" spellcheck="true" required><br><br>
+          <textarea name="posts" placeholder="Content" required rows="10" spellcheck="true"></textarea><br>
+          <input type="text" name="author" placeholder="Author" required value="<%=user.name  %>"readonly ><br><br>
           <button class="btn btn-primary" type="submit">
             <%= submit %>
           </button>
