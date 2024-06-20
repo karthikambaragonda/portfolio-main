@@ -20,7 +20,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "karthik",
   "license": "ISC",
-  "description": ""
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karthikambaragonda/portfolio-main.git"
+  },
+  "bugs": {
+    "url": "https://github.com/karthikambaragonda/portfolio-main.git/issues"
+  },
+  "homepage": "https://github.com/karthikambaragonda/portfolio-main.git#readme"
 }

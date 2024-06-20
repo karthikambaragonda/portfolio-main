@@ -11,8 +11,8 @@ import session from "express-session";
 import GoogleStrategy from "passport-google-oauth2";
 import env from "dotenv";
 import flash from "connect-flash";
-env.config()
 
+env.config()
 const app = express();
 const port = 4000;
 
@@ -462,4 +462,4 @@ function ensureAuthenticated(req, res, next) {
 app.listen(port, () => {
   console.log(`Server running on port http://localhost:${port}`);
 
-});
+});                                                    
