@@ -84,19 +84,16 @@ app.get("/qrsecret", (req, res) => {
   });
 });
 
-///////////////////////////////////////////////////////////////
+// connecting to db //
 const db = new pg.Client({
   connectionString: process.env.PG_STR,
 });
-
-
 db.connect((err) => {
   if (err) {
     console.error("Error connecting to the database", err);
   } else {
     console.log("Connected to the database");
   }
-
   db.on("error", (err) => {
     console.error("Database connection error:", err);
     if (err.code === "ECONNRESET" || err.code === "EPIPE") {
@@ -112,7 +109,7 @@ db.connect((err) => {
   });
 });
 
-
+//admin//
 app.get("/admin", (req, res) => {
   res.render("admin.ejs");
 });
@@ -138,15 +135,44 @@ app.get('/adminusers', isAuthenticatedlocal, (req, res) => {
     });
 });
 
-function isAuthenticatedlocal(req, res, next) {
-  if (req.isAuthenticated() && req.user.email === 'ambaragondakarthik@gmail.com') {
-    return next();
-  }
-  res.redirect('/admin');
-}
+app.get("/deleteuser/:email", (req, res) => {
+  const email = req.params.email;
+  console.log(email);
+  db.query("delete from blog where email=$1;", [email]);
+  res.redirect("/adminusers");
+});
+
+app.get("/emailexist", (req, res) => {
+  res.render("emailexist.ejs");
+})
+app.get("/signupsuccess", (req, res) => {
+  res.render("success.ejs")
+})
+
+app.get("/recover", (req, res) => {
+  res.render("recover.ejs");
+});
 
 
-
+app.post("/recover", (req, res) => {
+  const { email, s_answer } = req.body;
+  db.query(
+    "SELECT name, email, password FROM blog WHERE email = $1 AND security_answer = $2",
+    [email, s_answer],
+    (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        res.status(500).json({ error: "Internal server error" });
+      } else {
+        if (result.rows.length > 0) {
+          res.render("users.ejs", { users: result.rows });
+        } else {
+          res.send("No user Found or Wrong Password Entered!");
+        }
+      }
+    }
+  );
+});
 
 // app.get("/adminusers", (req, res) => {
 //   db.query("SELECT * FROM blog")
@@ -163,6 +189,8 @@ function isAuthenticatedlocal(req, res, next) {
 //     });
 // });
 
+
+            //blog//
 app.get("/blog-login", (req, res) => {
   res.render("login.ejs", { message: req.flash('error') });
 });
@@ -221,8 +249,6 @@ app.get("/edit/:id", ensureAuthenticated, async (req, res) => {
   }
 });
 
-
-// Create a new post
 app.post("/posts", ensureAuthenticated, async (req, res) => {
   try {
     const email = req.user.email;
@@ -239,9 +265,6 @@ app.post("/posts", ensureAuthenticated, async (req, res) => {
   }
 });
 
-
-
-// Partially update a post
 app.post("/posts/:id", ensureAuthenticated, async (req, res) => {
   console.log("called");
   try {
@@ -264,8 +287,6 @@ app.post("/posts/:id", ensureAuthenticated, async (req, res) => {
   }
 });
 
-
-// Delete a post
 app.get("/posts/delete/:id", ensureAuthenticated, async (req, res) => {
   try {
     const email = req.user.email;
@@ -284,12 +305,6 @@ app.get("/posts/delete/:id", ensureAuthenticated, async (req, res) => {
   }
 });
 
-app.get("/deleteuser/:email", (req, res) => {
-  const email = req.params.email;
-  console.log(email);
-  db.query("delete from blog where email=$1;", [email]);
-  res.redirect("/adminusers");
-});
 
 app.get("/logout", (req, res) => {
   req.logout(function (err) {
@@ -343,37 +358,7 @@ app.post("/signup", async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
-app.get("/emailexist", (req, res) => {
-  res.render("emailexist.ejs");
-})
-app.get("/signupsuccess", (req, res) => {
-  res.render("success.ejs")
-})
 
-app.get("/recover", (req, res) => {
-  res.render("recover.ejs");
-});
-
-
-app.post("/recover", (req, res) => {
-  const { email, s_answer } = req.body;
-  db.query(
-    "SELECT name, email, password FROM blog WHERE email = $1 AND security_answer = $2",
-    [email, s_answer],
-    (err, result) => {
-      if (err) {
-        console.error("Error executing query:", err);
-        res.status(500).json({ error: "Internal server error" });
-      } else {
-        if (result.rows.length > 0) {
-          res.render("users.ejs", { users: result.rows });
-        } else {
-          res.send("No user Found or Wrong Password Entered!");
-        }
-      }
-    }
-  );
-});
 
 passport.use(
   new Strategy({ usernameField: 'email' }, async function verify(email, password, cb) {
@@ -458,6 +443,12 @@ function ensureAuthenticated(req, res, next) {
     return next();
   }
   res.redirect('/blog-login');
+}
+function isAuthenticatedlocal(req, res, next) {
+  if (req.isAuthenticated() && req.user.email === 'ambaragondakarthik@gmail.com') {
+    return next();
+  }
+  res.redirect('/admin');
 }
 app.listen(port, () => {
   console.log(`Server running on port http://localhost:${port}`);
