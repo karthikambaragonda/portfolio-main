@@ -22,11 +22,11 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 64 * 24 * 60 * 60 * 1000,
+      maxAge: 2 * 7 * 24 * 60 * 60 * 1000,
     },
   })
 );
-
+3
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -190,9 +190,14 @@ app.post("/recover", (req, res) => {
 // });
 
 
-            //blog//
+//blog//
 app.get("/blog-login", (req, res) => {
-  res.render("login.ejs", { message: req.flash('error') });
+  if (req.isAuthenticated()) { 
+    res.redirect('/blog');
+  } else {
+    res.render("login.ejs", { message: req.flash('error') });
+  }
+  
 });
 
 app.post(
