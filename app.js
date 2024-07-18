@@ -190,14 +190,14 @@ app.post("/recover", (req, res) => {
 // });
 
 
-//blog//
+//////////////////////////////blog////////////////////////////
 app.get("/blog-login", (req, res) => {
-  if (req.isAuthenticated()) { 
+  if (req.isAuthenticated()) {
     res.redirect('/blog');
   } else {
     res.render("login.ejs", { message: req.flash('error') });
   }
-  
+
 });
 
 app.post(
