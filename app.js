@@ -193,6 +193,8 @@ app.post("/recover", (req, res) => {
 
 
 //////////////////////////////blog////////////////////////////
+
+
 app.get("/blog-login", (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect('/blog');
@@ -271,7 +273,7 @@ app.post("/posts", ensureAuthenticated, async (req, res) => {
     res.status(500).json({ message: "Error creating post" });
   }
 });
-
+//edit
 app.post("/posts/:id", ensureAuthenticated, async (req, res) => {
   console.log("called");
   try {
@@ -531,6 +533,8 @@ const Celsius = (kelvin) => {
 const convertToIST = (timestamp) => {
   return moment.unix(timestamp).tz('Asia/Kolkata').format('hh:mm A');
 };
+
+///////////////////
 app.listen(port, () => {
   console.log(`Server running on port http://localhost:${port}`);
 
