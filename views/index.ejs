@@ -3,6 +3,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta property="og:title" content="KARTHIK AMBARAGONDA">
+    <meta property="og:description" content="My Portfolio">
+    <meta property="og:image" content="https://raw.githubusercontent.com/karthikambaragonda/portfolio-main/651afdde04749c00b9c3e487eba762f0fd03b46b/public/images/p1.jpg">
+    <meta property="og:url" content="https://karthik-portfolio.onrender.com/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
      document.addEventListener("DOMContentLoaded", function () {
@@ -11,7 +15,7 @@
     zoomElement.classList.add("hover");
     setTimeout(() => {
       zoomElement.classList.remove("hover");
-    }, 500);
+    }, 700);
   }
 });
 
@@ -25,7 +29,7 @@ background-image: url("../images/connected.png");}
     transition: rotate 600ms,scale 0.5s;
   }
 
-  .zoom-effect:hover,.zoom-effect.hover {
+  .zoom-effect.hover {
     /*transform: scale(1.3);*/
     rotate: y 1turn;
     scale: 1.05;
