@@ -4,15 +4,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+     document.addEventListener("DOMContentLoaded", function () {
+  const zoomElement = document.querySelector(".zoom-effect");
+  if (zoomElement) {
+    zoomElement.classList.add("hover");
+    setTimeout(() => {
+      zoomElement.classList.remove("hover");
+    }, 500);
+  }
+});
+
+    </script>
         <style>.zoom-effect {
     transition: transform 0.3s;
   }
   body{ background-color: #d1d1d1;
 background-image: url("../images/connected.png");}
+.zoom-effect {
+    transition: rotate 600ms,scale 0.5s;
+  }
 
-
-  .zoom-effect:hover {
-    transform: scale(1.3);}
+  .zoom-effect:hover,.zoom-effect.hover {
+    /*transform: scale(1.3);*/
+    rotate: y 1turn;
+    scale: 1.05;
+  }
+  
   .custom-img-size {
     width: 300px; 
     height: 300px;
