@@ -90,7 +90,11 @@ app.get("/qrsecret", (req, res) => {
 // connecting to db //
 const db = new pg.Client({
   connectionString: process.env.PG_STR,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
+
 db.connect((err) => {
   if (err) {
     console.error("Error connecting to the database", err);
@@ -476,6 +480,7 @@ app.get("/get-weather", async (req, res) => {
   try {
     const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`);
     const result = response.data;
+    console.log(result);
     const tempCelsius = Celsius(result.main.temp);
     const temp_Min = Celsius(result.main.temp_min);
     const temp_Max = Celsius(result.main.temp_max);
