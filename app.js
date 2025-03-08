@@ -409,8 +409,8 @@ passport.use(
         const name = profile.displayName;
         if (result.rows.length === 0) {
           const newUser = await db.query(
-            "INSERT INTO blog (name,email,password,security_question,security_answer) VALUES ($1,$2,$3,$4,$5)",
-            [name, profile.email, "google", "google", "google"]
+            "INSERT INTO blog (name,email,password) VALUES ($1,$2,$3)",
+            [name, profile.email, "google"]
           );
           return cb(null, newUser.rows[0]);
         } else {
