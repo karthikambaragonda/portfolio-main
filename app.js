@@ -357,8 +357,8 @@ app.post("/signup", async (req, res) => {
       return res.redirect("/emailexist");
     } else {
       await db.query(
-        "INSERT INTO blog (email, name, password, security_question, security_answer) VALUES ($1, $2, $3, $4, $5)",
-        [email, name, password, security_question, security_answer]
+        "INSERT INTO blog (email, name, password) VALUES ($1, $2, $3)",
+        [email, name, password]
       );
       req.login({ email, name }, (err) => {
         if (err) {
